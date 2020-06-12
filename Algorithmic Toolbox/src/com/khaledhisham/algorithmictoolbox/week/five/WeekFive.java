@@ -2,6 +2,7 @@ package com.khaledhisham.algorithmictoolbox.week.five;
 
 public class WeekFive {
 
+    // Money Change Problem.
     private static int moneyChange(int money) {
         int[] m = new int[money + 1];
         int[] change = {0, 1, 3, 4};
@@ -27,6 +28,42 @@ public class WeekFive {
             return m[index];
         }
         return Integer.MAX_VALUE;
+    }
+
+    //Primitive Calculator
+    public static int[][] primitiveCalculator(int n){
+        int[] m = new int[n+1];
+        int [] solution = new int[n+1];
+        m[0] = 0;
+        m[1] = 0;
+        solution[0] = 0;
+        solution[1] = 0;
+        for(int i = 2 ; i < m.length ; ++i){
+            m[i] = Integer.MAX_VALUE;
+            solution[i]= -1;
+        }
+        for(int i = 2 ; i < m.length ; ++i){
+            if(i%3 == 0 && i%2 == 0){
+                int[] min = getMinModified(m[i-1], m[i/3], m[i/2]);
+                m[i] = min[0] ;
+                solution[i] = fillSolution(min[1], i);
+            }
+            else if(i % 3 == 0){
+                m[i] = m[i-1] < m[i/3] ? m[i-1] : m[i/3];
+                solution[i] = m[i-1] < m[i/3] ? i-1 : i/3;
+            }
+            else if(i % 2 == 0){
+                m[i] = m[i-1] < m[i/2] ? m[i-1] : m[i/2];
+                solution[i] = m[i-1] < m[i/2] ? i-1 : i/2;
+            }
+            else{
+                m[i] = m[i - 1];
+                solution[i] = i - 1;
+            }
+            m[i]++;
+        }
+        int[][] result = {m, solution};
+        return result;
     }
 
     // Rod Cutting Problem.
@@ -184,4 +221,35 @@ public class WeekFive {
         }
         return result;
     }
+    private static int[] getMinModified(int ...x){
+        int[] result = new int[2];
+        result[0]= Integer.MAX_VALUE;
+        for(int i = 0; i < x.length ; ++i){
+            if(result[0] > x[i]){
+                result[0] = x[i];
+                result[1] = i;
+            }
+        }
+        return result;
+    }
+    private static int fillSolution(int value , int index){
+        switch (value){
+            case 0:
+                return index - 1;
+            case 1 :
+                return index / 3;
+            case 2 :
+                return index / 2;
+        }
+        return 0;
+    }
+    private static void printSolution(int[] solution, int h){
+        int i = h;
+        if(solution[i] == 0){
+            return;
+        }
+        printSolution(solution, solution[i]);
+        System.out.print(solution[i] + " ");
+    }
+
 }
