@@ -151,7 +151,25 @@ public class WeekFive {
         return m[l][h];
     }
 
-    // Longest Common Subsequence.
+    // Edit Distance.
+    public static int EditDistance(String s, String t) {
+        int[][] m = new int[s.length() + 1][t.length() + 1];
+        for(int i = 0 ; i < m.length ; ++i)
+            m[i][0] = i;
+        for(int i = 0 ; i < m[0].length ; ++i)
+            m[0][i] = i;
+        for(int i = 1 ; i < m.length ; ++i){
+            for(int j = 1 ; j < m[0] .length ; ++j){
+                if(s.charAt(i-1) == t.charAt(j-1)){
+                    m[i][j] = getMin(m[i-1][j] + 1, m[i-1][j-1], m[i][j-1] + 1);
+                }
+                else{
+                    m[i][j] = getMin(m[i-1][j] + 1, m[i-1][j-1] + 1, m[i][j-1] + 1);
+                }
+            }
+        }
+        return m[s.length()][t.length()];
+    }
 
     // Util Functions HERE.
     private static int max(int x, int y){
