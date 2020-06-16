@@ -172,12 +172,6 @@ public class WeekFive {
     }
 
     // Util Functions HERE.
-    private static int max(int x, int y){
-        if(x >= y){
-            return x;
-        }
-        return y;
-    }
     private static void stressTest(){
         while(true){
             int n = (int) (Math.random() * 12) + 2;
@@ -216,19 +210,6 @@ public class WeekFive {
             }
             System.out.println();
         }
-    }
-    private static int[] insertionSort(int[] arr){
-        int n = arr.length;
-        for (int i = 1; i < n; ++i) {
-            int key = arr[i];
-            int j = i - 1;
-            while (j >= 0 && arr[j] > key) {
-                arr[j + 1] = arr[j];
-                j = j - 1;
-            }
-            arr[j + 1] = key;
-        }
-        return arr;
     }
     private static int getMin(int ...x){
         int result = x[0];
